@@ -20,23 +20,15 @@ jobs:
       - uses: actions/checkout@v1
         with:
           fetch-depth: 1
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
-      - name: Build App
+      - name: Install snapcraft
+        run: brew install snapcraft
+      - name: Build + Publish App
         run: |
           npm install
           npm run dist -- -lwm -p always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            dist/boj-*.exe
-            dist/boj-*.deb
-            dist/boj-*.dmg
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
