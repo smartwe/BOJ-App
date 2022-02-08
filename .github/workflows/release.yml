@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macOS-latest]
+        os: [macOS-latest, windows-latest, ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v1
@@ -25,9 +25,7 @@ jobs:
       - name: Build + Publish App
         run: |
           npm install
-          npm run build:win
-          npm run build:mac
-          npm run build:linux
+          npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
