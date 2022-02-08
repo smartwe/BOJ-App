@@ -21,7 +21,15 @@ jobs:
         with:
           node-version: 16.x
       - name: Install snapcraft
-        run: brew install snapcraft
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            echo "skip"
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            echo "skip"
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            brew isntall snapcraft
+          fi
+        shell: bash
       - name: Build + Publish App
         run: |
           npm install
