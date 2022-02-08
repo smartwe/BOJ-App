@@ -31,14 +31,15 @@ jobs:
           fi
         shell: bash
       - name: Build + Publish App
-        uses: fnkr/github-action-ghr@v1
         run: |
           npm install
           npm run build
-        if: startsWith(github.ref, 'refs/tags/')
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: fnkr/github-action-ghr@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
           GHR_PATH: dist/
-          GHR_COMPRESS: xz
+          GHR_COMPRESS: zip
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
